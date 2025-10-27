@@ -22,6 +22,7 @@ UserHub es una aplicación Angular con **NgModules** que lista usuarios obtenido
 
 ## 📦 Instalación
 npm install
+ng serve
 
 Abre http://localhost:4200 en tu navegador.
 
@@ -96,5 +97,9 @@ FilterByCityPipe
 
 ## 👨‍💻 Autor
 
-Carlos Mario Arroyave Martínez
+Carlos Mario Arroyave Martínez- 
 Desarrollado como taller práctico de Angular.
+
+## Ejecutar la aplicación 
+
+ng serve
