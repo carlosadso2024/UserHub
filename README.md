@@ -1,59 +1,100 @@
-# UserHub
+# UserHub - Aplicación Angular con Interceptores y Pipes
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.1.
+## 📋 Descripción del Proyecto
 
-## Development server
+UserHub es una aplicación Angular con **NgModules** que lista usuarios obtenidos desde la API pública de JSONPlaceholder. La aplicación demuestra el uso de interceptores HTTP basados en clases y pipes personalizados para transformar y filtrar datos.
 
-To start a local development server, run:
+## 🚀 Características
 
-```bash
-ng serve
-```
+- **Interceptor HTTP personalizado** basado en clase que implementa HttpInterceptor
+- **Pipes personalizados** declarados en AppModule para capitalización y filtrado
+- **Diseño responsive** con tarjetas de usuario estilizadas
+- **Búsqueda en tiempo real** por ciudad con filtrado dinámico
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🛠️ Tecnologías
 
-## Code scaffolding
+- Angular 17+ (NgModules)
+- TypeScript
+- RxJS
+- HttpClient
+- FormsModule
+- JSONPlaceholder API
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 📦 Instalación
+npm install
 
-```bash
-ng generate component component-name
-```
+Abre http://localhost:4200 en tu navegador.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🔧 Funcionamiento del Interceptor
 
-```bash
-ng generate --help
-```
+El interceptor `HttpLoggerInterceptor` es una **clase que implementa HttpInterceptor** y cumple las siguientes funciones:
 
-## Building
+1. **Header personalizado**: Agrega `X-App-Name: UserHub` a todas las peticiones HTTP mediante `req.clone()`
+2. **Logging de solicitudes**: Muestra "⏳ Enviando solicitud HTTP..." antes de cada petición
+3. **Logging de respuestas**: Detecta `HttpResponse` y muestra "✅ Respuesta recibida" con detalles
+4. **Manejo de errores**: Usa `catchError` para capturar errores 404 y 500, mostrando mensajes específicos en consola
 
-To build the project run:
+### Registro del Interceptor
 
-```bash
-ng build
-```
+El interceptor se registra en el `AppModule` usando el token `HTTP_INTERCEPTORS`:
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+providers: [
+{
+provide: HTTP_INTERCEPTORS,
+useClass: HttpLoggerInterceptor,
+multi: true // Permite múltiples interceptores
+}
+]
 
-## Running unit tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## 🎯 Pipes Personalizados
 
-```bash
-ng test
-```
+### 1. capitalizeName
+- **Función**: Capitaliza la primera letra de cada palabra en un nombre
+- **Ejemplo**: `"leanne graham"` → `"Leanne Graham"`
+- **Uso en template**: `{{ user.name | capitalizeName }}`
+- **Declaración**: Pipe registrado en el array `declarations` de AppModule
 
-## Running end-to-end tests
+### 2. filterByCity
+- **Función**: Filtra la lista de usuarios por ciudad (case-insensitive)
+- **Tipo**: Impure pipe (`pure: false`) para detectar cambios en tiempo real
+- **Uso en template**: `*ngFor="let user of users | filterByCity:cityFilter"`
+- **Declaración**: Pipe registrado en el array `declarations` de AppModule
 
-For end-to-end (e2e) testing, run:
+### Declaración de Pipes
 
-```bash
-ng e2e
-```
+Ambos pipes se declaran en `AppModule`:
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+declarations: [
+AppComponent,
+CapitalizeNamePipe,
+FilterByCityPipe
+]
 
-## Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📸 Capturas de Pantalla
+
+### Vista Principal
+![alt text](image.png)
+![alt text](image-1.png)
+
+### Filtro por Ciudad
+![alt text](image-2.png)
+![alt text](image-3.png)
+
+### Consola del Navegador
+![alt text](image-4.png)
+![alt text](image-5.png)
+
+## 🎓 Conceptos Aprendidos
+
+- Implementación de interceptores HTTP basados en clases
+- Creación de pipes personalizados con transformaciones
+- Registro de providers con `multi: true`
+- Integración de HttpClient en NgModules
+- Manejo de errores HTTP con RxJS operators
+
+## 👨‍💻 Autor
+
+Carlos Mario Arroyave Martínez
+Desarrollado como taller práctico de Angular.
